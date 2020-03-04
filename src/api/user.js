@@ -1,8 +1,26 @@
-import axios from "./index";
+import axios from './index'
 
-export const getUserInfo = () =>{
+ const getUserInfo = ({ userId }) => {
     return axios.request({
-        url: '/getUserInfo',
-        method: 'post'
+        url: '/index/getUserInfo',
+        method: 'post',
+        data: {
+            userId
+        }
     })
+}
+
+ const getUserName = ({userId}) => {
+    return axios.request({
+        url: '/users/getUserName',
+        method: 'get',
+        data: {
+            Id:userId
+        }
+    })
+}
+
+export  {
+    getUserInfo,
+    getUserName
 }

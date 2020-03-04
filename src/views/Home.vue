@@ -13,7 +13,7 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
-import {getUserInfo} from "../api/user";  //{getUserInfo} es6 结构赋值
+import {getUserInfo,getUserName} from "../api/user";  //{getUserInfo} es6 结构赋值
 /*import axios from 'axios'*/
 
 
@@ -71,8 +71,11 @@ export default {
             console.log(res)
         })*/
 
-        getUserInfo().then(res => {
-            console.log('res:'+res)
+        getUserInfo({userId:21}).then(res => {
+            console.log('res:'+JSON.stringify(res))
+        })
+        getUserName({Id:22}).then(res => {
+            console.log('res:'+JSON.stringify(res))
         })
       }
   }
