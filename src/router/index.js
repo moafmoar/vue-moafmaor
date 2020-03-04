@@ -66,6 +66,7 @@ const routes = [
   },
   {
     path:'/view_name',
+    /**子模块加载方式*/
     components:{
       default: () => import('@/views/child.vue'),
       email: () => import('@/views/email.vue'),
@@ -81,13 +82,18 @@ const routes = [
       console.log(to);
     }*/
     redirect: to => {
-      return 'info'
+      return 'About'
     }
   },
   {
     path:'/login',
     name:'login',
     component: () => import('@/views/login.vue')
+  },
+  {
+    path: '/store',
+    name: 'store',
+    component: () => import('@/views/store.vue')
   },
   {
     path:'*',

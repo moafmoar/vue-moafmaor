@@ -6,12 +6,16 @@
     <button @click="handleClick('push')">跳转parent</button>
     <button @click="handleClick('replace')">跳转parent</button>
     <b>{{food}}</b>
+      <button @click="getInfo">请求数据</button>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
+import {getUserInfo} from "../api/user";  //{getUserInfo} es6 结构赋值
+/*import axios from 'axios'*/
+
 
 export default {
   name: 'Home',
@@ -61,7 +65,16 @@ export default {
           name: 'info'
         })
       }
-    }
+    },
+      getInfo () {
+        /*axios.post('/getUserInfo',{userId:21}).then(res => {
+            console.log(res)
+        })*/
+
+        getUserInfo().then(res => {
+            console.log('res:'+res)
+        })
+      }
   }
 }
 </script>
