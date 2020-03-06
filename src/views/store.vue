@@ -3,11 +3,11 @@
        <!--双向绑定-->
        stateValue:<a-input v-model="stateValue" />
        <!--<a-input :value="stateValue" @input="handleStateValueChange"/>-->
-       <p>{{stateValue}}</p>
+       <p>stateValue：{{stateValue}}</p>
        inputValue:<a-input v-model="inputValue"/>
        <a-input @input="handleInput"/>
        <p>inputValue:{{inputValue}} ----> lastLetter is {{ inputValueLaseLetter }}</p>
-       <a-show :content="inputValue"/>
+       inputValue:<a-show :content="inputValue"/>
        <p>appName:{{appName}},appNameWithVersion {{appNameWithVersion}}</p>
        <p>userName:{{userName}},firstLatterName is :{{firstLetter}}</p>
 
@@ -105,9 +105,9 @@
             inputValueLaseLetter () {
                return this.inputValue.substr(-1,1)
             },
-            /*appNameWithVersion () {
+            appNameWithVersion () {
                return this.$store.getters.appNameWithVersion
-            }*/
+            }
         },
         methods: {
             /**

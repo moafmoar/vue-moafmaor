@@ -4,18 +4,24 @@
     <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
     <button @click="handleClick('back')">返回上一页</button>
     <button @click="handleClick('push')">跳转parent</button>
-    <button @click="handleClick('replace')">跳转parent</button>
+    <button @click="handleClick('replace')">跳转info</button>
     <b>{{food}}</b>
       <button @click="getInfo">请求数据</button>
+      <button @click="updateInfo">请求修改数据</button>
+
+      <p>{{homeName}}</p>
+      <p>{{supNameVersion}}</p>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
-import {getUserInfo,getUserName} from "../api/user";  //{getUserInfo} es6 结构赋值
+import {getUserInfo,getUserName,getSupHomeName} from "../api/user";  //{getUserInfo} es6 结构赋值
 /*import axios from 'axios'*/
+import {updateSupName} from "../api/home";
 
+import { mapState,mapMutations,mapActions,mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
@@ -41,7 +47,25 @@ export default {
     if (leave) next()
     else next(false)
   },
+    computed: {
+      ...mapState({
+          homeName: state => state.home.homeName
+      }),
+      ...mapGetters([
+          'supNameVersion'
+      ]),
+        /*获取getters里面的数据*/
+      supNameVersion () {
+          return this.$store.getters.supNameVersion
+      }
+    },
   methods: {
+    ...mapMutations([
+        'SET_SUP_NAME'
+    ]),
+    ...mapActions([
+        'updateHomeName'
+    ]),
     handleClick(type) {
       if (type === 'back') {
         this.$router.back()
@@ -61,7 +85,7 @@ export default {
           path:`/argu/${name}`,
         })
       } else if (type === 'replace') {
-        this.$router.push({
+        this.$router.replace({
           name: 'info'
         })
       }
@@ -76,7 +100,31 @@ export default {
         })
         getUserName({Id:22}).then(res => {
             console.log('res:'+JSON.stringify(res))
+            this.userName = 'admin1'
         })
+
+          getSupHomeName().then(res => {
+              //const sup_home_name = JSON.stringify(res)
+              console.log(res)
+              this.SET_SUP_NAME({homeName:res.data.data.userName})
+              //console.log(res.data.data.userName)
+          })
+      },
+      updateInfo () {
+          updateSupName().then( res => {
+              console.log(res)
+              console.log(res.data.supName)
+              /**
+               * 1.this.$store.dispatch 触发一个actions
+               * 2.mutations 与 ations 的区别
+               *   2.1 mutations 是同步请求操作state状太，而 actions是异步请求操作 state
+               *   2.2 只能通过actions commis 一个mutations
+               *   2.3 actions 和 mutations 都可以操作state
+               *
+               */
+              this.$store.dispatch('updateHomeName',{homeName:res.data.supName})
+          })
+
       }
   }
 }

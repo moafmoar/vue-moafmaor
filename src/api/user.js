@@ -20,7 +20,15 @@ import axios from './index'
     })
 }
 
+const getSupHomeName = () => {
+    return axios.request({
+        url: '/users/getUserName',
+        method: 'get'
+    })
+}
+
 export  {
     getUserInfo,
-    getUserName
+    getUserName,
+    getSupHomeName
 }

@@ -4,7 +4,8 @@ import user from './module/user'
 import getters from "./getters";
 import mutations from "./mutations";
 import actions from "./actions";
-import saveInLocal  from "./plugin/saveInLocal";
+//import saveInLocal  from "./plugin/saveInLocal";
+import home from "./module/home";
 
 Vue.use(Vuex)
 
@@ -18,12 +19,13 @@ export default new Vuex.Store({  // Vuex.Store创建实例
     stateValue:'abc'
   },
   mutations,
+  getters,
   actions,
   modules: {
-    user
+    user,
+    home
   },
-  getters,
   plugins: [
-      saveInLocal
+      //saveInLocal
   ]
 })
