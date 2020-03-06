@@ -9,13 +9,14 @@
 
 const state = {
    homeName: 'sup_amdin',
-   supNameWithVersion: 'sNameWithVsersion'
+   supNameWithVersion: 'sNameWithVsersion',
+    mockHomeName:''
 }
 
 /*获取 state 里面的状态值*/
 const getters = {
    supNameVersion: (state) =>{
-       return `supNameWithVersion:${state.supNameWithVersion},homeName:${state.homeName} v2.0`
+       return `${state.supNameWithVersion} v2.0`
    }
 }
 
@@ -23,6 +24,9 @@ const getters = {
 const mutations = {
     SET_SUP_NAME (state,params) {
         state.homeName = params.homeName
+    },
+    SET_SUP_MOCK_NAME (state,params) {
+        state.mockHomeName = params.mockHomeName
     }
 }
 
@@ -30,7 +34,10 @@ const mutations = {
 const actions = {
    updateHomeName ({commit,state,rootState,dispatch},params) {
        commit('SET_SUP_NAME',params)
-   }
+   },
+    updateMockHomeName ({commit},params) {
+       commit('SET_SUP_MOCK_NAME',params)
+    }
 }
 export default {
     state,

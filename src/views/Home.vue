@@ -6,11 +6,15 @@
     <button @click="handleClick('push')">跳转parent</button>
     <button @click="handleClick('replace')">跳转info</button>
     <b>{{food}}</b>
-      <button @click="getInfo">请求数据</button>
+      <button @click="getInfo" :style={background:coloers}>请求数据</button>
       <button @click="updateInfo">请求修改数据</button>
 
       <p>{{homeName}}</p>
       <p>{{supNameVersion}}</p>
+     <p>mockHomeName:{{mockHomeName}}</p>
+      <img src="url"/>
+
+      <p>food:{{mockfood}}</p>
   </div>
 </template>
 
@@ -28,6 +32,13 @@ export default {
   components: {
     //HelloWorld
   },
+    data () {
+      return {
+          url:'',
+          coloers: '',
+          mockfood: ''
+      }
+    },
   props:{
     food:{
       type:String,
@@ -49,12 +60,14 @@ export default {
   },
     computed: {
       ...mapState({
-          homeName: state => state.home.homeName
+          homeName: state => state.home.homeName,
+          mockHomeName: state => state.home.mockHomeName
       }),
-      ...mapGetters([
+        /*获取getters里面的数据 两种方式*/
+        /* ...mapGetters([
           'supNameVersion'
-      ]),
-        /*获取getters里面的数据*/
+      ]),*/
+
       supNameVersion () {
           return this.$store.getters.supNameVersion
       }
@@ -64,7 +77,8 @@ export default {
         'SET_SUP_NAME'
     ]),
     ...mapActions([
-        'updateHomeName'
+        'updateHomeName',
+        'updateMockHomeName'
     ]),
     handleClick(type) {
       if (type === 'back') {
@@ -91,17 +105,18 @@ export default {
       }
     },
       getInfo () {
-        /*axios.post('/getUserInfo',{userId:21}).then(res => {
+       /* axios.post('/getUserInfo',{userId:21}).then(res => {
             console.log(res)
         })*/
 
         getUserInfo({userId:21}).then(res => {
-            console.log('res:'+JSON.stringify(res))
+            console.log(res)
         })
-        getUserName({Id:22}).then(res => {
+
+        /*getUserName({Id:22}).then(res => {
             console.log('res:'+JSON.stringify(res))
-            this.userName = 'admin1'
-        })
+            //this.userName = 'admin1'
+        })*/
 
           getSupHomeName().then(res => {
               //const sup_home_name = JSON.stringify(res)
@@ -112,8 +127,8 @@ export default {
       },
       updateInfo () {
           updateSupName().then( res => {
-              console.log(res)
-              console.log(res.data.supName)
+              console.log(res.data)
+              //console.log(res.data.supName)
               /**
                * 1.this.$store.dispatch 触发一个actions
                * 2.mutations 与 ations 的区别
@@ -123,6 +138,10 @@ export default {
                *
                */
               this.$store.dispatch('updateHomeName',{homeName:res.data.supName})
+              this.$store.dispatch('updateMockHomeName',{mockHomeName:res.data[0].mockhomeName})
+              this.url = res.data[0].img
+              this.coloers = res.data[0].coloers
+              this.mockfood = res.data[1].food
           })
 
       }
