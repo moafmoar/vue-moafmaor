@@ -58,6 +58,7 @@ export default {
     if (leave) next()
     else next(false)
   },
+    /*计算属性*/
     computed: {
       ...mapState({
           homeName: state => state.home.homeName,
@@ -138,6 +139,7 @@ export default {
                *
                */
               this.$store.dispatch('updateHomeName',{homeName:res.data.supName})
+
               this.$store.dispatch('updateMockHomeName',{mockHomeName:res.data[0].mockhomeName})
               this.url = res.data[0].img
               this.coloers = res.data[0].coloers

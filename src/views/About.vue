@@ -9,7 +9,7 @@
 <script>
   import store from '@/store'
  export  default {
-   name :'about',
+   name :'About',
    store,
    data(){
      return{

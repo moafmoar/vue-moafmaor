@@ -8,11 +8,11 @@ Mock.mock(/\/getUserName/,getUserName)
 Mock.mock(/\/getUserName/,{data:{userName:'tempMockUserName'}})
 Mock.mock(/\/updateSupName/,'put',updateSupName)
 
-
-Mock,setTimeout({
+/*设置访问延时*/
+Mock.setup({
     timeout:0
 })
-
+/*自定义模板属性*/
 Random.extend({
     food () {
         const food = ['面包','剪刀面','小屁面','意大利面']
